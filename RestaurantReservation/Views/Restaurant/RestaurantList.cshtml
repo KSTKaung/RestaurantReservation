@@ -1,0 +1,128 @@
+﻿@model List<RestaurantReservation.Models.RestaurantModel>
+
+@{
+    ViewData["Title"] = "RestaurantList";
+}
+
+<h1>List Of Restaurant</h1>
+
+<script type="text/javascript">
+    // Parameters Pass To Modal
+    function passParamModal(RID,MIN,MAX){
+        document.getElementById("restaurantId").value = RID;
+        document.getElementById("bookingTime").value = MIN;
+        document.getElementById("bookingTime").min = MIN;
+        document.getElementById("bookingTime").max = MAX;
+
+        let currentDate = new Date().toJSON().slice(0, 10);
+        document.getElementById("bookingDate").value = currentDate;
+        document.getElementById("bookingDate").min = currentDate;
+    }
+</script>
+<form asp-controller="Restaurant">
+
+    <!-- Display ErrorMessage -->
+    @if (TempData["DangerMessage"] != null)
+    {
+        if (TempData["DangerMessage"].ToString() != "")
+        {
+            <div class="alert alert-danger" role="alert">
+                @TempData["DangerMessage"]
+            </div>  
+        }
+    }
+    <!-- Display InfoMessage -->
+    @if (TempData["InfoMessage"] != null)
+    {
+        if (TempData["InfoMessage"].ToString() != "")
+        {
+            <div class="alert alert-info" role="alert">
+                @TempData["InfoMessage"]
+            </div>
+        }
+        
+    }
+    <!-- Display Restaurant Detail -->
+    <div class="row">
+        @for(var i = 0; i < Model.Count; i++)
+        {
+            <div class="col-sm-4">
+                <div class="card">
+                        <input type="image" src="/@Model[i].Image" asp-for="@Model[i].Image" asp-append-version="true" width="355" height="200" />
+                <div class="card-body">
+                    <table>
+
+                        <tr>
+                            <td class="card-text">
+                                <label asp-for="@Model[i].RestaurantName">@Model[i].RestaurantName</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="card-text">
+                                <label asp-for="@Model[i].OpenFromDate">@Model[i].OpenFromDate</label>
+                                 ~ 
+                                <label asp-for="@Model[i].OpenToDate">@Model[i].OpenToDate</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="card-text">
+                                <label asp-for="@Model[i].OpenFromTime">@Model[i].OpenFromTime</label>
+                                 ~ 
+                                 <label asp-for="@Model[i].OpenToTime">@Model[i].OpenToTime</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="card-text">
+                                <label asp-for="@Model[i].Remark">@Model[i].Remark</label>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="card-footer">
+                        <div class="card-group">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bookingmodel"
+                                    onclick="passParamModal('@Model[i].Id','@Model[i].OpenFromTime','@Model[i].OpenToTime')">
+                                Book
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Modal -->
+            <div class="modal fade" id="bookingmodel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title fs-5" id="staticBackdropLabel">Restaurant Booking</h3>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" id="restaurantId" asp-for="@Model[i].RID" />
+                            <!-- Date of Booking input -->
+                            <div class="mb-3">
+                                <label class="form-label">Date</label>
+                                <input type="date" id="bookingDate" class="form-control" asp-for="@Model[i].BookingDate"/>
+                            </div>
+                            <!-- Time of Booking input -->
+                            <div class="mb-3">
+                                <label class="form-label">Time</label>
+                                <input type="time" id="bookingTime" class="form-control" asp-for="@Model[i].BookingTime" />
+                            </div>
+                            <!-- Number of People to Book input -->
+                            <div class="mb-3">
+                                <label class="form-label">Number of People</label>
+                                <input type="number" class="form-control" asp-for="@Model[i].BookingNumberOfPeople" />
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" asp-action="BookingData" class="btn btn-primary">Book</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</form>

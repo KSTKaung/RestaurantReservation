@@ -1,0 +1,54 @@
+﻿@model List<RestaurantReservation.Models.BookModel>
+
+@{
+    ViewData["Title"] = "BookedRestaurantList";
+}
+
+<h1>List Of Booked Restaurant</h1>
+
+<form asp-controller="User">
+
+    <!-- Display InfoMessage -->
+    @if (TempData["InfoMessage"] != null)
+    {
+        if (TempData["InfoMessage"].ToString() != "")
+        {
+            <div class="alert alert-info" role="alert">
+                @TempData["InfoMessage"]
+            </div>
+        }
+    }
+    <!-- Display Booked Restaurant Detail -->
+    <table class="table table-striped table-info">
+        <thead>
+            <tr>
+                <th scope="col">Restaurant Name</th>
+                <th scope="col">Booking Date</th>
+                <th scope="col">Booking Time</th>
+                <th scope="col">Number of People</th>
+                <th scope="col">Booked Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if(Model.Count == 0 )
+            {
+                <tr>No matching records found</tr>
+            }
+            else
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.RestaurantName</td>
+                        <td>@item.BookingDate</td>
+                        <td>@item.BookingTime</td>
+                        <td>@item.NumberOfPeople</td>
+                        <td>@item.BookedDate</td>
+                    </tr>
+                }
+            }
+            
+        </tbody>
+    </table>
+
+</form>

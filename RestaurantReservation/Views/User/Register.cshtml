@@ -1,0 +1,45 @@
+﻿@using RestaurantReservation.Models
+@model RestaurantReservation.Models.UserModel
+
+@{
+    ViewData["Title"] = "Register";
+    Layout = null;
+}
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/RestaurantReservation.styles.css" asp-append-version="true" />
+
+<h1 class="text-center">Register</h1>
+
+<form asp-controller="User" method="post">
+    
+    <div class="container">
+        <!-- Email input -->
+        <div class="form-group mb-2">
+            <label>Email</label>
+            <input type="email" class="form-control" asp-for="Email"  placeholder="Enter Email" required />
+        </div>
+        <!-- Password input -->
+        <div class="form-group mb-2">
+            <label>Password</label>
+            <input type="password" class="form-control" asp-for="Password" placeholder="Enter Password" required>
+        </div>
+        <!-- Name input -->
+        <div class="form-group mb-2">
+            <label>Name</label>
+            <input type="text" class="form-control" asp-for="Name" placeholder="Enter Name" required>
+        </div>
+        <!-- PhoneNo input -->
+        <div class="form-group mb-2">
+            <label>PhoneNo</label>
+            <input type="tel" class="form-control" asp-for="PhoneNo" placeholder="Enter PhoneNo" required>
+        </div>
+        <!-- Address input -->
+        <div class="form-group mb-2">
+            <label>Address</label>
+            <input type="text" class="form-control" asp-for="Address" placeholder="Enter Address" required>
+        </div>
+        <button type="submit" class="btn btn-primary" asp-action="RegisterData">Register</button>
+    </div>
+</form>

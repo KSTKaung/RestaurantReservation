@@ -1,0 +1,49 @@
+﻿@model RestaurantReservation.Models.UserModel
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/RestaurantReservation.styles.css" asp-append-version="true" />
+
+<h1 class="text-center">Login</h1>
+
+<form asp-controller ="User" method="post">
+
+    <!-- Display ErrorMessage -->
+    @if (TempData["DangerMessage"] != null)
+    {
+        if (TempData["DangerMessage"].ToString() != "")
+        {
+            <div class="alert alert-danger" role="alert">
+                @TempData["DangerMessage"]
+            </div>
+        }
+    }
+
+    <div class="container">
+        <!-- UserName input -->
+        <div class="form-group mb-2">
+            <label>Email</label>
+            <input type="email" class="form-control" asp-for="Email" placeholder="Enter Email" required />
+        </div>
+
+        <!-- Password input -->
+        <div class="form-group mb-2">
+            <label>Password</label>
+            <input type="password" class="form-control" asp-for="Password" placeholder="Enter Password" required>
+        </div>
+
+        <!-- Submit button -->
+        <button type="submit"  class="btn btn-primary" asp-action="LoginData">Login</button>
+        
+        <!-- Register buttons -->
+        <div class="text-center">
+            <p>Not a member? <a asp-action="Register">Register</a></p>
+        </div>
+    </div>
+
+</form>
